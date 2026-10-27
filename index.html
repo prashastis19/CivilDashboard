@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Civil Engineering Project Management Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-role="manager">
+<a class="skip" href="#main">Skip to content</a>
+<header>
+  <div><h1>Site Ledger</h1><p>Civil Engineering Project Management Dashboard</p></div>
+  <div class="tools">
+    <label>Role
+      <select id="role"><option value="manager">Manager</option><option value="engineer">Engineer</option><option value="worker">Worker</option></select>
+    </label>
+    <button id="theme" class="ghost" aria-label="Toggle dark mode">Dark mode</button>
+  </div>
+</header>
+<nav id="nav">
+  <button data-tab="dash" class="on" aria-current="true">Dashboard <span id="nb" class="badge"></span></button><button data-tab="tasks">Tasks</button>
+  <button data-tab="mats">Materials</button><button data-tab="crew">Workforce</button>
+  <button data-tab="budget">Budget</button><button data-tab="time">Timeline</button>
+  <button data-tab="rep">Reports</button>
+</nav>
+<main id="main">
+  <section id="dash"></section>
+  <section id="tasks" hidden>
+    <form id="fTask" class="eng row">
+      <input name="name" placeholder="Task name" required>
+      <select name="phase"></select>
+      <input name="who" placeholder="Assigned to" required>
+      <input name="due" type="date" required>
+      <button>Add task</button>
+    </form>
+    <div class="row">
+      <input id="q" type="search" placeholder="Search tasks or people">
+      <select id="fPh"><option value="">All phases</option><option>Foundation</option><option>Structure</option><option>Masonry</option><option>Finishing</option></select>
+      <select id="fSt"><option value="">All statuses</option><option value="pending">Pending</option><option value="progress">In progress</option><option value="done">Done</option></select>
+    </div>
+    <div class="wrap" id="tTask"></div>
+  </section>
+  <section id="mats" hidden>
+    <form id="fMat" class="eng row">
+      <input name="name" placeholder="Material" required>
+      <input name="qty" type="number" min="0" placeholder="Quantity" required>
+      <input name="unit" placeholder="Unit (bags, tonnes)" required>
+      <input name="min" type="number" min="0" placeholder="Low-stock level" required>
+      <button>Add material</button>
+    </form>
+    <div class="wrap" id="tMat"></div>
+  </section>
+  <section id="crew" hidden>
+    <form id="fCrew" class="adm row">
+      <input name="name" placeholder="Worker name" required>
+      <input name="role" placeholder="Trade (mason, bar bender)" required>
+      <button>Add worker</button>
+    </form>
+    <p class="note">Attendance for <b id="attDate"></b>. Tick workers present today.</p>
+    <div class="wrap" id="tCrew"></div>
+  </section>
+  <section id="budget" hidden>
+    <form id="fBud" class="adm row">
+      <input name="cat" placeholder="Category" required>
+      <input name="plan" type="number" min="0" step="0.1" placeholder="Budgeted (₹ lakh)" required>
+      <input name="actual" type="number" min="0" step="0.1" placeholder="Actual (₹ lakh)" required>
+      <button>Add category</button>
+    </form>
+    <div class="wrap" id="tBud"></div>
+  </section>
+  <section id="time" hidden>
+    <label class="note">Warn me <input id="warn" type="number" min="0" max="30" class="mini"> days before a deadline</label>
+    <div id="tTime"></div>
+  </section>
+  <section id="rep" hidden>
+    <div class="row">
+      <button id="bCsv">Export CSV</button><button id="bJson">Back up (JSON)</button>
+      <label class="btn adm">Restore backup<input id="bImp" type="file" accept=".json" hidden></label>
+      <button id="bPrint" class="ghost">Print / save as PDF</button>
+      <button id="bReset" class="ghost adm">Reset sample data</button>
+    </div>
+    <div class="charts">
+      <figure><canvas id="cBud"></canvas></figure>
+      <figure><canvas id="cTask"></canvas></figure>
+      <figure><canvas id="cPhase"></canvas></figure>
+    </div>
+  </section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
